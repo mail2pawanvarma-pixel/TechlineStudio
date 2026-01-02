@@ -1,0 +1,7 @@
+{
+  "name": "Techline Studio AI & Cybersecurity Training",
+  "description": "An interactive web application for Techline Studio, featuring an AI agent, program details for AI and Cybersecurity training, and direct WhatsApp communication.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
