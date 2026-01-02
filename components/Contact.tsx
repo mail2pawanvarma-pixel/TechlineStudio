@@ -1,155 +1,76 @@
 
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Send, MessageCircle } from 'lucide-react';
+import { Phone, MapPin, MessageCircle, ExternalLink, ArrowRight, Mail } from 'lucide-react';
 import { POSTER_DATA, WHATSAPP_NUMBER } from '../constants';
 
 const Contact: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    class: '',
-    message: '',
-  });
+  const [formData, setFormData] = useState({ name: '', phone: '', class: '', message: '' });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Construct WhatsApp Message
-    const text = `*New Enrollment Inquiry from Website*%0A%0A*Name:* ${formData.name}%0A*Phone:* ${formData.phone}%0A*Class:* ${formData.class}%0A*Message:* ${formData.message}`;
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
-    
-    // Open WhatsApp
-    window.open(whatsappUrl, '_blank');
+    const text = `*New Enrollment Inquiry*%0A%0A*Name:* ${formData.name}%0A*Phone:* ${formData.phone}%0A*Class:* ${formData.class}%0A*Message:* ${formData.message}`;
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
   };
 
   return (
-    <section className="py-24 bg-slate-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-black text-gray-900 mb-4">Get in Touch</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto font-medium">
-            Fill the form below to enroll your child in the upcoming AI & Cybersecurity batch. 
-            The form will be delivered directly to our WhatsApp.
-          </p>
+    <section className="py-32 bg-white">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="text-center mb-20">
+          <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-6">Let's Connect</h2>
+          <p className="text-xl text-slate-500 font-medium tracking-tight">Visit us or reach out via WhatsApp / Call / Email.</p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-12 bg-white rounded-3xl shadow-xl overflow-hidden">
-          {/* Contact Info Sidebar */}
-          <div className="lg:w-1/3 bg-blue-700 p-12 text-white">
-            <h3 className="text-2xl font-bold mb-8">Contact Information</h3>
-            <div className="space-y-8">
-              <div className="flex items-start space-x-4">
-                <div className="bg-white/10 p-3 rounded-xl">
-                  <Phone className="h-6 w-6" />
-                </div>
-                <div>
-                  <p className="font-bold text-blue-100 uppercase text-xs tracking-wider">Call or WhatsApp</p>
-                  <a href={`tel:${POSTER_DATA.contact}`} className="text-lg font-bold hover:underline">
-                    {POSTER_DATA.contact}
-                  </a>
-                </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Quick Buttons */}
+          <div className="space-y-4">
+            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} className="flex items-center p-8 bg-[#25D366] rounded-[30px] text-white hover:scale-[1.02] transition-transform shadow-lg">
+              <MessageCircle className="h-10 w-10 mr-6" />
+              <div>
+                <p className="text-xs font-black uppercase tracking-widest opacity-80">Message Us</p>
+                <p className="text-2xl font-black">WhatsApp</p>
               </div>
+            </a>
+            
+            <a href={`tel:${POSTER_DATA.contact}`} className="flex items-center p-8 bg-blue-600 rounded-[30px] text-white hover:scale-[1.02] transition-transform shadow-lg">
+              <Phone className="h-10 w-10 mr-6" />
+              <div>
+                <p className="text-xs font-black uppercase tracking-widest opacity-80">Call Mentor</p>
+                <p className="text-2xl font-black">{POSTER_DATA.contact}</p>
+              </div>
+            </a>
 
-              <div className="flex items-start space-x-4">
-                <div className="bg-white/10 p-3 rounded-xl">
-                  <Mail className="h-6 w-6" />
-                </div>
-                <div>
-                  <p className="font-bold text-blue-100 uppercase text-xs tracking-wider">Email Us</p>
-                  <a href={`mailto:${POSTER_DATA.email}`} className="text-lg font-bold hover:underline">
-                    {POSTER_DATA.email}
-                  </a>
-                </div>
+            <a href={`mailto:${POSTER_DATA.email}`} className="flex items-center p-8 bg-red-500 rounded-[30px] text-white hover:scale-[1.02] transition-transform shadow-lg">
+              <Mail className="h-10 w-10 mr-6" />
+              <div>
+                <p className="text-xs font-black uppercase tracking-widest opacity-80">Send Email</p>
+                <p className="text-xl font-black">contact@rebrainsol...</p>
               </div>
+            </a>
 
-              <div className="flex items-start space-x-4">
-                <div className="bg-white/10 p-3 rounded-xl">
-                  <MapPin className="h-6 w-6" />
-                </div>
-                <div>
-                  <p className="font-bold text-blue-100 uppercase text-xs tracking-wider">Visit Us</p>
-                  <p className="text-lg font-bold leading-tight">
-                    {POSTER_DATA.location}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-16">
-              <div className="bg-blue-600/50 p-6 rounded-2xl border border-blue-400/30">
-                <h4 className="font-bold text-xl mb-2">Class Starts</h4>
-                <p className="text-blue-50 font-medium">Sunday, 18 January 2026</p>
-                <p className="text-blue-50 font-medium">01:00 PM Sharp</p>
-              </div>
+            <div className="p-8 bg-slate-900 rounded-[30px] text-white">
+              <MapPin className="h-10 w-10 mb-4 text-red-500" />
+              <p className="text-lg font-bold leading-tight mb-4">{POSTER_DATA.location}</p>
+              <a href="https://maps.google.com/?q=Techline+Studio+Ambikapur" className="text-xs font-black uppercase tracking-widest text-red-400 flex items-center">
+                Open Maps <ExternalLink className="ml-2 h-4 w-4" />
+              </a>
             </div>
           </div>
 
           {/* Form */}
-          <div className="lg:w-2/3 p-12">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">Full Name</label>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full px-5 py-4 bg-slate-50 border-2 border-transparent focus:border-blue-500 rounded-2xl transition-all outline-none"
-                    placeholder="Enter student name"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">Phone Number</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    required
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="w-full px-5 py-4 bg-slate-50 border-2 border-transparent focus:border-blue-500 rounded-2xl transition-all outline-none"
-                    placeholder="Active WhatsApp number"
-                  />
-                </div>
+          <div className="lg:col-span-2 bg-slate-50 p-12 md:p-16 rounded-[40px] border border-slate-100">
+            <h3 className="text-3xl font-black text-slate-900 mb-10">Application Form</h3>
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <input name="name" required onChange={handleChange} className="bg-transparent text-xl font-bold py-4 border-b-2 border-slate-300 focus:border-blue-600 outline-none" placeholder="Full Name" />
+                <input name="phone" required onChange={handleChange} className="bg-transparent text-xl font-bold py-4 border-b-2 border-slate-300 focus:border-blue-600 outline-none" placeholder="Mobile Number" />
               </div>
-
-              <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">Current Class / College Year</label>
-                <input
-                  type="text"
-                  name="class"
-                  required
-                  value={formData.class}
-                  onChange={handleChange}
-                  className="w-full px-5 py-4 bg-slate-50 border-2 border-transparent focus:border-blue-500 rounded-2xl transition-all outline-none"
-                  placeholder="e.g. Class 10th or 2nd Year"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">Message (Optional)</label>
-                <textarea
-                  name="message"
-                  rows={4}
-                  value={formData.message}
-                  onChange={handleChange}
-                  className="w-full px-5 py-4 bg-slate-50 border-2 border-transparent focus:border-blue-500 rounded-2xl transition-all outline-none resize-none"
-                  placeholder="Ask any questions here..."
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-green-600 hover:bg-green-700 text-white font-black py-5 rounded-2xl flex items-center justify-center space-x-3 transition-all transform hover:-translate-y-1 shadow-xl"
-              >
-                <MessageCircle className="h-6 w-6" />
-                <span>Submit & Send to WhatsApp</span>
+              <input name="class" required onChange={handleChange} className="w-full bg-transparent text-xl font-bold py-4 border-b-2 border-slate-300 focus:border-blue-600 outline-none" placeholder="Your Class (e.g. 10th)" />
+              <button type="submit" className="w-full bg-slate-900 text-white font-black py-6 rounded-[20px] text-xl hover:bg-black transition-all flex items-center justify-center">
+                Send Application <ArrowRight className="ml-4 h-6 w-6" />
               </button>
             </form>
           </div>
